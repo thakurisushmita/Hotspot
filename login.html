@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hotel Pokhara Grande Hostpot</title>
+  <link rel="stylesheet" href="style.css"/>
+  <!-- <script>
+    function openLogin() {
+	if (window.name != 'hotspot_logout') return true;
+	open('$(link-login)', '_blank', '');
+	window.close();
+	return false;
+    }
+</script> -->
+</head>
+<body>
+  $(if chap-id)
+  <form name="sendin" action="$(link-login-only)" method="post" style="display:none">
+      <input type="hidden" name="username" />
+      <input type="hidden" name="password" />
+      <input type="hidden" name="dst" value="$(link-orig)" />
+      <input type="hidden" name="popup" value="true" />
+  </form>
+
+  <script src="/md5.js"></script>
+  <script>
+      function doLogin() {
+        console.log('do login called')
+          document.sendin.username.value = document.login.username.value;
+          document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value + '$(chap-challenge)');
+          document.sendin.submit();
+          return false;
+      }
+
+  </script>
+  $(endif)
+  <div class="background">
+    <div class="wifi-card">
+      <img src="./assets/images/Logo.png" alt="Hotel Logo" class="logo" />
+      <h2>Welcome to Hotel Pokhara Grande Hotspot</h2>
+      <p class="subtitle">“The only Five Star Hotel in Pokhara”</p>
+    
+      <p class="info $(if error)alert$(endif)">
+        $(if error == "")Please log in to use the internet hotspot service
+        $(if trial == 'yes')<br />Free trial available,
+        <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">click here</a>.
+        $(endif)$(endif)
+        $(if error)$(error)$(endif)
+      </p>
+    
+      <form name="login" class="form" action="$(link-login-only)" method="post" $(if chap-id) onSubmit="return doLogin()" $(endif)>
+        <input type="hidden" name="dst" value="$(link-orig)" />
+        <input type="hidden" name="popup" value="true" />
+        <label for="username">Password</label>
+        <input type="password" name="username" id="username" placeholder="Enter your password" required />
+        <input name="password" value="pgrande" id="password" type="hidden" />
+        <button type="submit">Connect to Hotspot</button>
+      </form>
+    
+      <div class="help">
+        <p><span>❓</span> Need help? Contact Front Desk</p>
+      </div>
+    
+      <footer>
+        <p>For assistance, please contact the front desk.<br>© 2025 Hotel Pokhara Grande. All rights reserved.</p>
+        <p class="phone">061-450210, 450211, 450212</p>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
